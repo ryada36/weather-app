@@ -46,7 +46,7 @@ geocode.getAddress(argv.address,(message)=>{
     });
     return promise;
 }).then((temperature)=>{
-    console.log('Current Temperature :',temperature.temperature);
+    console.log('Current Temperature ',temperature.temperature);
     console.log('Feels like :',temperature.actualTemperature);
 
 }).catch((error)=>{
