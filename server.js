@@ -15,11 +15,11 @@ app.use(express.static(__dirname+'/app'));
 
 //custom middleware for fetching the weather information
 app.use((req,res,next)=>{
-    console.log('inside middleware');
+
     var proxyRequired=false;
     if(!process.env.PORT)
         proxyRequired=true;
-    geocode.getAddress("kanpur",(message)=>{console.log(message)},proxyRequired)
+    geocode.getAddress("kanpur,india",(message)=>{console.log(message)},proxyRequired)
         .then((address)=>{
             weatherModel.latitude=address.lat;
             weatherModel.longitude=address.lang;
@@ -29,6 +29,7 @@ app.use((req,res,next)=>{
             console.log(weatherModel)
         }).catch((error)=>{
             console.log('Error:',error);
+            weatherModel.latitude='undefined';
         })
 
     next();
@@ -40,9 +41,7 @@ app.set('view engine','hbs');
 app.get('/',(req,res)=>{
     res.render(__dirname+'/app/index.hbs',weatherModel);
 })
-app.get('/about',(req,res)=>{
-    res.send('Hello world!');
-})
+
 app.listen(port,()=>{
     console.log('server listening at port :',port);
 })

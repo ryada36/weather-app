@@ -17,10 +17,19 @@
         <![endif]-->
         
         <header>
-            <p>Currently Showing Weather Details for Kanpur</p>
+            <p>Weather Application</p>
         </header>
         <div class="content">
-            <p>{{latitude}}</p>
+            <p>Currently showing the weather detail for <b>kanpur</b></p>
+            <pre>
+                {{#if latitude}}
+                    Latitude : {{latitude}}
+                    Longitude : {{longitude}}
+                    Current Temperature(in farenhite) : {{currentTemperature}}
+                {{else}}
+                    Something went wrong in fetching data from API . Please try again.
+                {{/if}}
+            </pre>
         </div>
         <footer>
             <p>@copyright 2018</p>
