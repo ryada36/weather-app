@@ -1,7 +1,7 @@
 console.log('Building weather app');
 //load third party libraries
 const yargs=require('yargs');
-const request=require('request');
+const weather=require('./weather');
 const geocode=require('./geocode');
 
 
@@ -20,31 +20,7 @@ geocode.getAddress(argv.address,(message)=>{
     console.log('Formatted address :',address.formatted_address);
     console.log('Latitude :',address.lat);
     console.log('longitude :',address.lang)
-
-    //get the temperature detail for the give address
-
-    var promise=new Promise((resolve,reject)=>{
-
-        var url=`https://api.darksky.net/forecast/582cc8548d784c6c6800c60131c6d65c/${address.lat},${address.lang}`;
-        //call weather API and fetch the details
-        request({
-            url:url,
-            json:true,
-            proxy:'http://indblrb06intpxy01.ad.infosys.com:80'
-        },(error,response,body)=>{
-            if(!error){
-                resolve({
-                    temperature:body.currently.temperature,
-                    actualTemperature:body.currently.apparentTemperature
-                })
-            }
-            else{
-                console.log('Error :'+error);
-                reject(null)
-            }
-        })
-    });
-    return promise;
+    return weather.getWeatherDetails(address)
 }).then((temperature)=>{
     console.log('Current Temperature ',temperature.temperature);
     console.log('Feels like :',temperature.actualTemperature);

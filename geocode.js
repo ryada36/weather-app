@@ -1,17 +1,21 @@
 const request=require('request');
 
-var getAddress=(address,callback)=>{
+var getAddress=(address,callback,proxyRequired=true)=>{
 
     //create a promise and return from this fucntion
     var promise=new Promise((resolve,reject)=>{
-        request({
+
+        var options={
             url:`https://maps.googleapis.com/maps/api/geocode/json?address=${address}`,
             json:true,
-            proxy:'http://indblrb06intpxy01.ad.infosys.com:80'
-        },(error,response,body)=>{
+        }
+        if(proxyRequired)
+            options.proxy='http://10.81.82.132:80';
+
+        request(options,(error,response,body)=>{
             if(error){
                 reject(null);
-                callback('unable to connect');
+                callback('unable to connect '+error);
             }   
             else{
                 if(body.status==='OK'){
