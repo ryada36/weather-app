@@ -19,7 +19,7 @@ app.use((req,res,next)=>{
     var proxyRequired=false;
     if(!process.env.PORT)
         proxyRequired=true;
-    geocode.getAddress("kanpur,india",(message)=>{console.log(message)},proxyRequired)
+    geocode.getAddress("lucknow,india",(message)=>{console.log(message)},proxyRequired)
         .then((address)=>{
             weatherModel.latitude=address.lat;
             weatherModel.longitude=address.lang;
